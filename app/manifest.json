@@ -16,7 +16,11 @@
     ]
   },
   "content_scripts": [{
-    "matches": ["https://www.slideshare.net/*", "https://speakerdeck.com/*"],
+    "matches": [
+      "https://www.slideshare.net/*",
+      "https://speakerdeck.com/*",
+      "http://qiita.com/Qiita/items/*"
+    ],
     "css": ["styles/content.css"],
     "js": ["scripts/content.js"],
     "all_frames": true,
