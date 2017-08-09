@@ -31,20 +31,26 @@ export default class ContentManager {
       isNavigation : this.isNavigation,
       isCommentable: this.isCommentable,
       hashtag      : this.hashtag,
+      direction    : this.direction,
       room         : this.room_id,
     }
   }
 
-  recho(hashtag) {
+  recho(hashtag, direction) {
     if (this.hashtag === hashtag) {
-      this._updateSignboard(this.count)
+      this._updateNavigation(this.count)
     } else {
       this.count = { tweet: 0, like: 0 }
-      this.showSignboard(hashtag, this.count)
+      this.showNavigation(hashtag, this.count)
     }
     this.isRechoing = true
     this.isCommentable = true
     this.hashtag = hashtag
+    this.direction = direction
+  }
+
+  update(params) {
+    this.direction = params.direction
   }
 
   disrecho() {
@@ -64,7 +70,7 @@ export default class ContentManager {
 
     if ($('.recho_viewer').length) {
       $('.recho_viewer .r_hashtag').text(`#${hashtag}`)
-      return this._updateSignboard(count)
+      return this._updateNavigation(count)
     }
 
     const $viewer = `
@@ -111,6 +117,7 @@ export default class ContentManager {
     this.isRechoing = false
     this.isNavigation = false
     this.isCommentable = false
+    this.direction = 'ho'
     this.hashtag = ''
     this.room_id = randomStr(10)
 

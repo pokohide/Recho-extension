@@ -18,7 +18,7 @@ $(function() {
     })
 
     $submitButton.addClass('loading')
-    manager.send({ method: 'recho', hashtag: hashtag }, (res) => {
+    manager.send({ method: 'recho', hashtag: hashtag, direction: direction }, (res) => {
       $submitButton.addClass('active').removeClass('loading').text('有効中')
     })
   }

@@ -13,24 +13,26 @@ const connect = (socket) => {
   socket.on('request_state', () => {
     socket.emit('get_state', r__manager.getState())
   })
-  socket.on('show comments', () => {
+  socket.on('show_comments', () => {
     r__flowly.toggle(true)
   })
-  socket.on('hide comments', () => {
+  socket.on('hide_comments', () => {
     r__flowly.toggle(false)
   })
-  socket.on('show navigation', () => {
+  socket.on('show_navigation', () => {
     r__manager.showNavigation()
   })
-  socket.on('hide navigation', () => {
+  socket.on('hide_navigation', () => {
     r__manager.hideNavigation()
   })
-  socket.on('next page', () => {
+  socket.on('next_page', () => {
     r__manager.goNext()
   })
-  socket.on('prev page', () => {
+  socket.on('prev_page', () => {
     r__manager.goPrev()
   })
+
+  socket.emit('join_room', { room: r__manager.room_id })
   return socket
 }
 
@@ -67,6 +69,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.method) {
     case 'update':
       console.log(request.dir)
+      r__manager.update({ direction: request.dir })
       r__flowly.update({ direction: request.dir })
       sendResponse(true)
       break
@@ -75,9 +78,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse({ isRechoing: r__manager.isRechoing, room: r__manager.room_id })
       break
     case 'recho':
-      const { hashtag } = request
+      const { hashtag, direction } = request
       createStream(r__socket, { hashtag: hashtag, room: r__manager.room_id })
-      r__manager.recho(hashtag)
+      r__manager.recho(hashtag, direction)
       sendResponse(true)
       break
     case 'disrecho':
