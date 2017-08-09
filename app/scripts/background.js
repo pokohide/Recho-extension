@@ -1,7 +1,8 @@
 const match_page = (url) => {
   const regs = [
     /https:\/\/www\.slideshare\.net\/.*/,
-    /https:\/\/speakerdeck\.com\/.*/
+    /https:\/\/speakerdeck\.com\/.*/,
+    /http:\/\/qiita\.com\/Qiita\/items\/.*/
   ]
   for (let i = 0; regs.length; i++) {
     if (regs[i].test(url)) return true

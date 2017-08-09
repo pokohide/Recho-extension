@@ -1,84 +1,48 @@
 import $ from 'jquery'
+import PopupManager from './manager/popup'
 
 const $submitButton = $('#submit-button')
 const $hashInput = $('#hashtag-input')
 const $dirInput = $('#direction-input')
 
-const sendMessage = (message, cb) => {
-  // 取得するタブの条件
-  const queryInfo = {
-    active: true,
-    windowId: chrome.windows.WINDOW_ID_CURRENT
-  }
-  chrome.tabs.query(queryInfo, (result) => {
-    const currentTab = result.shift()
-    chrome.tabs.sendMessage(currentTab.id, message, (res) => {
-      cb(res)
-    })
-  })
-}
-
-const toggleButton = (flag) => {
-  if (flag) {
-    $('#submit-button').addClass('active').text('有効中')
-  } else {
-    $('#submit-button').removeClass('active').text('有効にする')
-  }
-}
-
-const enableStrem = () => {
-  const hashtag = $hashInput.val()
-  const direction = $dirInput.val()
-
-  chrome.storage.local.set({
-    recho_hashtag: hashtag,
-    recho_direction: direction
-  })
-
-  $submitButton.addClass('loading')
-  sendMessage({ method: "recho", hashtag }, (res) => {
-    $submitButton.addClass('active').removeClass('loading').text('有効中')
-  })
-}
-
-const disableStream = () => {
-  $submitButton.addClass('loading')
-  sendMessage({ method: "disrecho" }, (res) => {
-    $submitButton.removeClass('active').removeClass('loading').text('有効にする')
-  })
-}
-
-/* Init */
-chrome.storage.local.get(['recho_hashtag', 'recho_direction'], (items) => {
-  $hashInput.val(items.recho_hashtag)
-  $dirInput.val(items.recho_direction)
-})
-
 $(function() {
-  $submitButton.addClass('loading').addClass('disabled')
-  sendMessage({ method: 'isRechoing' }, (res) => {
-    $submitButton.removeClass('loading').removeClass('disabled')
-    toggleButton(res)
-  })
+  const manager = new PopupManager()
 
-  $dirInput.on('change', function(e) {
+  const enableStream = () => {
+    const hashtag = $hashInput.val()
+    const direction = $dirInput.val()
+
+    chrome.storage.local.set({
+      recho_hashtag  : hashtag,
+      recho_direction: direction
+    })
+
+    $submitButton.addClass('loading')
+    manager.send({ method: 'recho', hashtag: hashtag }, (res) => {
+      $submitButton.addClass('active').removeClass('loading').text('有効中')
+    })
+  }
+
+  const disableStream = () => {
+    $submitButton.addClass('loading')
+    manager.send({ method: 'disrecho' }, (res) => {
+      $submitButton.removeClass('active').removeClass('loading').text('有効にする')
+    })
+  }
+
+  $dirInput.on('change', (e) => {
     const dir = $dirInput.val()
-    sendMessage({ method: "update", dir }, (res) => {
-      chrome.storage.local.set({
-        recho_direction: dir
-      })
+    manager.send({ method: 'update', dir: dir }, (res) => {
+      chrome.storage.local.set({ recho_direction: dir })
     })
   })
 
-  $submitButton.on('click', function(e) {
+  $submitButton.on('click', (e) => {
     e.preventDefault()
     const isRecho = $submitButton.hasClass('active')
-    // active = trueなら有効中という事。つまりdisableStreamする意味
+    console.log('isRecho', isRecho)
 
-    if (isRecho) {
-      disableStream()
-    } else {
-      enableStrem()
-    }
+    if (isRecho) disableStream()
+    else enableStream()
   })
 })
