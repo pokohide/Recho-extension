@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { randomStr } from '../utils'
 
 const API_URL = 'https://recho-api.herokuapp.com'
 
@@ -27,18 +28,26 @@ export default class PopupManager {
   _init() {
     this.submitButton.addClass('loading').addClass('disabled')
 
-    chrome.storage.local.get(['recho_hashtag', 'recho_direction'], (items) => {
-      this.hashInput.val(items.recho_hashtag || '')
-      this.dirInput.val(items.recho_direction || 'horizontal')
-    })
+    chrome.storage.local.get(['recho_hashtag', 'recho_direction', 'recho_token'], (items) => {
+      const { recho_hashtag, recho_direction, recho_token } = items
+      this.hashInput.val(recho_hashtag || '')
+      this.dirInput.val(recho_direction || 'horizontal')
+      if (recho_token) {
+        this.userID = recho_token
+      } else {
+        this.userID = randomStr(10)
 
-    this.send({ method: 'isRechoing' }, (res) => {
-      this.submitButton.removeClass('loading').removeClass('disabled')
+        chrome.storage.local.set({ recho_token: this.userID })
+      }
 
-      this.adminURL = `${API_URL}/admin?room=${res.room}`
-      console.log(this.adminURL)
-      this.qrCode.html(`<img src="http://chart.apis.google.com/chart?cht=qr&chs=130x130&chl=${this.adminURL}">`)
-      this._toggleSubmit(res.isRechoing)
+      this.send({ method: 'isRechoing', user_id: this.userID }, (res) => {
+        this.submitButton.removeClass('loading').removeClass('disabled')
+
+        this.adminURL = `${API_URL}/admin?room=${res.room}`
+        console.log(this.adminURL)
+        this.qrCode.html(`<img src="http://chart.apis.google.com/chart?cht=qr&chs=130x130&chl=${this.adminURL}">`)
+        this._toggleSubmit(res.isRechoing)
+      })
     })
   }
 

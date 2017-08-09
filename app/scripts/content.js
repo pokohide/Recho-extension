@@ -74,6 +74,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse(true)
       break
     case 'isRechoing':
+      r__manager.generateRoomId(request.user_id)
       r__socket = connect(r__socket)
       sendResponse({ isRechoing: r__manager.isRechoing, room: r__manager.room_id })
       break

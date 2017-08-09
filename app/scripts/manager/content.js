@@ -2,6 +2,7 @@
 /* jQueryに依存 */
 
 import $ from 'jquery'
+import crypto from 'crypto'
 import { randomStr } from '../utils'
 
 export default class ContentManager {
@@ -47,6 +48,12 @@ export default class ContentManager {
     this.isCommentable = true
     this.hashtag = hashtag
     this.direction = direction
+  }
+
+  generateRoomId(user_id) {
+    if (this.room_id) return
+    const prefix = crypto.createHash('md5').update(location.href).digest('hex')
+    this.room_id = prefix + '_' + user_id
   }
 
   update(params) {
@@ -119,7 +126,6 @@ export default class ContentManager {
     this.isCommentable = false
     this.direction = 'ho'
     this.hashtag = ''
-    this.room_id = randomStr(10)
 
     this.slide = {}
     if (type === 'slideshare') {
