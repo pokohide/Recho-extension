@@ -65,6 +65,8 @@ var r__manager = new ContentManager(location.hostname)
 var r__flowly = new Flowly(r__manager.container)
 var r__socket = undefined
 
+chrome.extension.sendRequest({}, function(res) {})
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.method) {
     case 'update':
@@ -81,13 +83,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case 'recho':
       const { hashtag, direction } = request
       createStream(r__socket, { hashtag: hashtag, room: r__manager.room_id })
-      r__manager.recho(hashtag, direction)
-      sendResponse(true)
+      r__manager.recho(hashtag, direction, () => { sendResponse(true) })
       break
     case 'disrecho':
       deleteStream(r__socket, { room: r__manager.room_id })
-      r__manager.disrecho()
-      sendResponse(true)
+      r__manager.disrecho(() => { sendResponse(true) })
       break
     default:
       break

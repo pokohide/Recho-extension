@@ -14,4 +14,10 @@ const update_button = (tabid, info) => {
   info.url && (match_page(info.url) ? chrome.pageAction.show(tabid) : chrome.pageAction.hide(tabid))
 }
 
-chrome.tabs.onUpdated.addListener(update_button)
+// chrome.tabs.onUpdated.addListener(update_button)
+
+// このファイルは、content_script.jsからリクエストを受け取って、アドレスバーにアイコンを表示する。
+chrome.extension.onRequest.addListener((request, sender, sendResponse) => {
+  chrome.pageAction.show(sender.tab.id)
+  sendResponse(true)
+})

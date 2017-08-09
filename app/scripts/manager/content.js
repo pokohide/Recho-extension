@@ -37,17 +37,20 @@ export default class ContentManager {
     }
   }
 
-  recho(hashtag, direction) {
+  recho(hashtag, direction, cb) {
+    this.isRechoing = true
+    this.isCommentable = true
+    this.isNavigation = true
+
     if (this.hashtag === hashtag) {
       this._updateNavigation(this.count)
     } else {
       this.count = { tweet: 0, like: 0 }
       this.showNavigation(hashtag, this.count)
     }
-    this.isRechoing = true
-    this.isCommentable = true
     this.hashtag = hashtag
     this.direction = direction
+    cb()
   }
 
   generateRoomId(user_id) {
@@ -60,10 +63,11 @@ export default class ContentManager {
     this.direction = params.direction
   }
 
-  disrecho() {
+  disrecho(cb) {
     this.isRechoing = false
     this.isCommentable = false
     this.hideNavigation()
+    cb()
   }
 
   hideNavigation() {
@@ -116,7 +120,7 @@ export default class ContentManager {
   _updateNavigation(count) {
     $('.recho_viewer .recho_tweet .recho_count').text(count.tweet || 0)
     $('.recho_viewer .recho_like .recho_count').text(count.like || 0)
-    if (isNavigation) {
+    if (this.isNavigation) {
       $('.recho_viewer').show()
     }
   }
@@ -136,7 +140,7 @@ export default class ContentManager {
       this.prevButton = '#btnPrevious'
 
     } else if (type === 'speakerdeck') {
-      this.container = '#player'  //'.speakerdeck-iframe'
+      this.container = '.speakerdeck-iframe'
       this.nextButton = '.controls .next'
       this.prevButton = '.controls .prev'
 
