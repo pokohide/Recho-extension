@@ -62,6 +62,7 @@ export default class ContentManager {
 
   disrecho() {
     this.isRechoing = false
+    this.isCommentable = false
     this.hideNavigation()
   }
 
@@ -95,7 +96,7 @@ export default class ContentManager {
       </div>
       <div style="max-width:100%;min-height:0;-webkit-box-flex:0;flex-grow:0;border-top:1px solid rgba(0, 0, 0, 0.05);
         position:static;background:none;width:auto;margin:0;top:0;left:0;color:rgba(0,0,0,0.4);box-shadow:none;
-        border-radius:0em 0em 0.28571429rem 0.28571429rem;font-size:1em;border:none;padding:5px 40px;">
+        border-radius:0em 0em 0.28571429rem 0.28571429rem;font-size:1em;border:none;padding:5px 40px;padding-bottom:15px">
         <span class="recho_tweet" style="float:left;color:rgba(0, 0, 0, 0.4);display:flex;-webkit-align-items:center;">
           <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAADeAAAA3gHd6oNqAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAVlQTFRF////AP//gID/Var/gL//Zsz/Var/bbb/ccb/ZrPmar/qYsTrbbbtabTwY7jxZr/yYbbzar/0Zrj1aL32Ybn2Y73vaLfvYrzwZrnyY7nzZrv0ZLz0Zbr0Zr3wZLnwZrnxZb3yY7ryZLvzZLnzZ7r0Y7nyZbryZLvzZbvzZrrzZLrxZLvxZbryZbvyZrryZbrzZrvzZLrzZrvxZLvxZrvxZbzyZbryZrvyZrvxZbvxZrzyZbzyZrvyZLzyZrvzZrzxZbvxZbvxZLzyZbryZbvyZrvyZbzyZLryZrzyZLvzZbryZrvyZbzyZbvyZbvyZbvyZrzyZbvyZLvyZLvxZbzyZbvyZbvyZbvyZbzzZrvxZbzyZrvyZbvyZbvyZrvyZbvyZbvyZbvyZbvyZrvxZbvyZLvyZbvyZbvyZbvyZbvyZbvyZbvyZbvzZbvyZbvyZbvyZbvyZbvyZbvyQjjGIAAAAHJ0Uk5TAAECAwQFBgcJCgwNDhESFBUYGRsdHyAiKCwtLjAyMzc6O0BCQ01RUlNVWV5gYmRoaWtscHFyd3iAg4WIioyPlJWXm5ydnp+go6Wrra6vsLGytbe8vb7DyMzO0NPV19jZ2tze4uTn6uvv8PLz9fj5+vv9gIIbZAAAARNJREFUGBnFwecjAnEABuA3sjMiZHRZ2YTMrERkU1kZGZGZ7v3/P3BXrt/l11eeB/+jbeHkPjxSBaA71A7AZ4HIMp2m5ml+9pp7AFq5UQrBCvMS9grAS+5Ww+BWaUiOhw+BRZIPHvw4pUkXMErNjgs66wcFKQ8AhVkXE7UAOijqgibGHDW+OjxGUQs0zjSLqQTgtGMoTblXfGt8WfMGKJeAZotFBaFpSrKYfug63yj3WYMs1x2l9qFrcMAWeKeEAp0tdbkePMjwl2Pk+CiVUZBTskyZOeQNRFUWilggqlOOaBKvh4nnhiYxGwxWR5//nGahchiWVBa66oWoZ/uZorPJMhSwugen/KFI/PE2ujnTjD/3BTnX5zUB5rkyAAAAAElFTkSuQmCC" style="width:22px;height:22px;display:inline-block;vertical-align:middle;">
           <span class="recho_count" style="font-size:16px;margin-left:3px;">${count.tweet || 0}</span>
@@ -115,8 +116,9 @@ export default class ContentManager {
   _updateNavigation(count) {
     $('.recho_viewer .recho_tweet .recho_count').text(count.tweet || 0)
     $('.recho_viewer .recho_like .recho_count').text(count.like || 0)
-    $('.recho_viewer').show()
-    this.isNavigation = true
+    if (isNavigation) {
+      $('.recho_viewer').show()
+    }
   }
 
   /* タイプから判別する */
@@ -132,10 +134,16 @@ export default class ContentManager {
       this.container = '.slide_container'
       this.nextButton = '#btnNext'
       this.prevButton = '#btnPrevious'
+
     } else if (type === 'speakerdeck') {
-      this.container = '.speakerdeck-iframe'
+      this.container = '#player'  //'.speakerdeck-iframe'
+      this.nextButton = '.controls .next'
+      this.prevButton = '.controls .prev'
+
     } else if (type === 'qiita') {
       this.container = '.slide_preview'
+      this.nextButton = '.slide_controller_btn .fa-forward'
+      this.prevButton = '.slide_controller_btn .fa-backward'
     }
   }
 
