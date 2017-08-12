@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "crypto": "^0.0.3",
-    "flowly-js": "^1.1.2",
+    "flowly-js": "^1.1.3",
     "jquery": "^3.2.1",
     "randomstring": "^1.1.5",
     "socket.io-client": "^2.0.3",

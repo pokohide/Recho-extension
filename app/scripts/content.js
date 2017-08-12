@@ -10,6 +10,7 @@ const connect = (socket) => {
   socket = io(API_URL)
   socket.on('tweet', tweetHandler)
   socket.on('like', likeHandler)
+  socket.on('retweet', likeHandler)
   socket.on('request_state', () => {
     socket.emit('get_state', r__manager.getState())
   })
@@ -48,14 +49,14 @@ const tweetHandler = (tweet) => {
 // ハッシュタグを含むツイートがいいねされた時にいいね！をランダムで表示したい
 const likeHandler = (like) => {
   console.log('like', like)
-  r__manager.countUp('like', 1)
-
   r__flowly.addImage({
     url: chrome.extension.getURL('images/like.png'),
-    width: 50,
-    height: 50,
-    direction: 'random'
+    width: '50px',
+    height: '50px',
+    direction: 'random',
+    duration: 1500
   })
+  r__manager.countUp('like', 1)
 }
 
 const createStream = (socket, params) => {
