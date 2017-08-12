@@ -47,8 +47,15 @@ const tweetHandler = (tweet) => {
 
 // ハッシュタグを含むツイートがいいねされた時にいいね！をランダムで表示したい
 const likeHandler = (like) => {
-  console.log(like)
+  console.log('like', like)
   r__manager.countUp('like', 1)
+
+  r__flowly.addImage({
+    url: chrome.extension.getURL('images/like.png'),
+    width: 50,
+    height: 50,
+    direction: 'random'
+  })
 }
 
 const createStream = (socket, params) => {
