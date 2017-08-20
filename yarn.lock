@@ -2469,9 +2469,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flowly-js@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/flowly-js/-/flowly-js-1.1.3.tgz#15bc823ad1b6f3e6ad4e4ceaf3423b5ff8939114"
+flowly-js@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/flowly-js/-/flowly-js-1.1.4.tgz#60c0dae82f791c71665160e9c4824236aa4911b5"
   dependencies:
     babel-cli "^6.24.1"
     browserify "^14.4.0"

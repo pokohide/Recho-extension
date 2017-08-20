@@ -51,8 +51,8 @@ const likeHandler = (like) => {
   console.log('like', like)
   r__flowly.addImage({
     url: chrome.extension.getURL('images/like.png'),
-    width: '50px',
-    height: '50px',
+    width: '80px',
+    height: '80px',
     direction: 'random',
     duration: 1500
   })
