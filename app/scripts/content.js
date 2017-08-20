@@ -70,7 +70,7 @@ const deleteStream = (socket, params) => {
 /******************************************************/
 const API_URL = 'https://recho-api.herokuapp.com'
 var r__manager = new ContentManager(location.hostname)
-var r__flowly = new Flowly(r__manager.container)
+var r__flowly = new Flowly(r__manager.container, { padding: { top: 30, bottom: 30 } })
 var r__socket = undefined
 
 chrome.extension.sendRequest({}, function(res) {})
