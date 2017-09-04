@@ -2469,9 +2469,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flowly-js@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/flowly-js/-/flowly-js-1.1.4.tgz#60c0dae82f791c71665160e9c4824236aa4911b5"
+flowly-js@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/flowly-js/-/flowly-js-1.1.5.tgz#9771f9b1b8ebe528fb4c66d16369bb3703e55827"
   dependencies:
     babel-cli "^6.24.1"
     browserify "^14.4.0"
@@ -4577,7 +4577,7 @@ node-pre-gyp@^0.6.36:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
-node-sass@^4.2.0:
+node-sass@^4.2.0, node-sass@^4.5.3:
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.5.3.tgz#d09c9d1179641239d1b97ffc6231fdcec53e1568"
   dependencies:

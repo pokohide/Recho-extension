@@ -44,6 +44,7 @@
     "gulp-tag-version": "1.x.x",
     "gulp-util": "3.x.x",
     "gulp-zip": "^4.x.x",
+    "node-sass": "^4.5.3",
     "require-dir": "0.x.x",
     "vinyl-named": "1.x.x",
     "webpack": "2.x.x",
@@ -52,8 +53,9 @@
   },
   "dependencies": {
     "crypto": "^0.0.3",
-    "flowly-js": "^1.1.4",
+    "flowly-js": "^1.1.5",
     "jquery": "^3.2.1",
+    "node-sass": "^4.5.3",
     "randomstring": "^1.1.5",
     "socket.io-client": "^2.0.3",
     "superagent": "^3.5.2"
