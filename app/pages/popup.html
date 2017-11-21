@@ -9,7 +9,9 @@
 <body>
 
   <header class="ui nav menu header">
-    <img src="../images/logo.png" class="ui small centered image" style="height:50px;width:auto;margin: 0 auto;">
+    <a href='https://hyde2able.github.io/Recho/' class='logo-image' target='_blank'>
+      <img src="../images/logo.png" class="ui small centered image">
+    </a>
   </header>
 
   <div class="recho-container">
@@ -20,22 +22,20 @@
         <input id="hashtag-input" type="text" placeholder="OthloTech" name="hashtag">
       </div>
       <h4 class="ui center aligned header">
-        <div class="sub header">ハッシュタグを入力する</div>
+        <div class="sub header">Input Hashtag on Twitter</div>
       </h4>
     </div>
 
     <div class="option-container">
-      <h4 class="ui horizontal divider header">
-        オプション
-      </h4>
+      <h4 class="ui horizontal divider header">Options</h4>
 
       <div class="ui small form">
 
         <div class="select field">
-          <label>方向</label>
+          <label>Direction of Flow</label>
           <select name="direction" class="ui dropdown" id="direction-input">
-            <option value="right" selected>横方向</option>
-            <option value="top">縦方向</option>
+            <option value="right" selected>Horizontal</option>
+            <option value="top">Vertical</option>
           </select>
         </div>
 
@@ -43,7 +43,7 @@
     </div>
 
     <div class="submit-container">
-      <button id="submit-button" class="ui button">有効にする</button>
+      <button id="submit-button" class="ui button">Activate</button>
     </div>
 
     <div class="qrcode-container">
