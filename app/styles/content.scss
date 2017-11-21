@@ -1,2 +1,58 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
+
+.recho_news_ticker_container {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  left: 0;
+  padding: 0;
+  height: 2em;
+  display: inline-block;
+  background-color: rgba(255, 255, 255, .9);
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.recho_news_ticker {
+  border-collapse: separate;
+  border-spacing: 0;
+  height: 100%;
+  line-height: 1;
+  width: 100%;
+  font-weight: bold;
+}
+
+.recho_news_ticker th {
+  position: relative;
+  width: 120px;
+  vertical-align: top;
+  background: #eee;
+  color: #00aced;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.recho_news_ticker th:after {
+  position: absolute;
+  top: 0;
+  right: -2em;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 1em solid transparent;
+  border-left: 1em solid #eee;
+}
+
+.recho_news_ticker th .recho_twitter_logo {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.recho_news_ticker td {
+  font-size: 1em;
+  padding: 0.5em;
+  padding-left: 2em;
+  color: #333;
+}

@@ -10,7 +10,7 @@ export default class PopupManager {
     this.submitButton = $('#submit-button')
     this.hashInput = $('#hashtag-input')
     this.dirInput = $('#direction-input')
-    this.qrCode = $('.qrcode-container')
+    this.qrCode = $('.qrcode-container .qrcode')
 
     this._init()
   }

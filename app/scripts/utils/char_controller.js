@@ -2,6 +2,7 @@
 
 import $ from 'jquery'
 import Flowly from 'flowly-js'
+import NewsTicker from './news_ticker'
 
 export default class CharController {
   constructor(type, container, opts = { direction: 'horizontal' }) {
@@ -52,8 +53,9 @@ export default class CharController {
     if (this._isFlowly()) {
       this.flowly = this.flowly || new Flowly(this.container, { padding: { top: 30, bottom: 30 } })
       this.flowly.update(this.opts)
-    } else if (this._isNewsTicker()) {
 
+    } else if (this._isNewsTicker()) {
+      this.ticker = this.ticker || new NewsTicker(this.container)
     }
   }
 
