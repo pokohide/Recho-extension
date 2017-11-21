@@ -12,12 +12,10 @@ export default class ContentManager {
   }
 
   goNext() {
-    console.log('goNext')
     $(this.nextButton).click()
   }
 
   goPrev() {
-    console.log('goPrev')
     $(this.prevButton).click()
   }
 
@@ -37,6 +35,7 @@ export default class ContentManager {
     }
   }
 
+  // Rechoを起動
   recho(hashtag, direction, cb) {
     this.isRechoing = true
     this.isCommentable = true
@@ -53,6 +52,14 @@ export default class ContentManager {
     cb()
   }
 
+  // Rechoを終了
+  disrecho(cb) {
+    this.isRechoing = false
+    this.isCommentable = false
+    this.hideNavigation()
+    cb()
+  }
+
   generateRoomId(user_id) {
     if (this.room_id) return
     const prefix = crypto.createHash('md5').update(location.href).digest('hex')
@@ -61,13 +68,6 @@ export default class ContentManager {
 
   update(params) {
     this.direction = params.direction
-  }
-
-  disrecho(cb) {
-    this.isRechoing = false
-    this.isCommentable = false
-    this.hideNavigation()
-    cb()
   }
 
   hideNavigation() {
@@ -130,10 +130,7 @@ export default class ContentManager {
     this.isRechoing = false
     this.isNavigation = false
     this.isCommentable = false
-    this.direction = 'ho'
-    this.hashtag = ''
 
-    this.slide = {}
     if (type === 'slideshare') {
       this.container = '.slide_container'
       this.nextButton = '#btnNext'
@@ -148,6 +145,11 @@ export default class ContentManager {
       this.container = '.slide_preview'
       this.nextButton = '.slide_controller_btn .fa-forward'
       this.prevButton = '.slide_controller_btn .fa-backward'
+
+    } else if (type === 'google') {
+      this.container = '.punch-viewer-container'
+      this.nextButton = '.punch-viewer-right'
+      this.prevButton = '.punch-viewer-left'
     }
   }
 
@@ -155,5 +157,6 @@ export default class ContentManager {
     if (/slideshare/.test(host)) return 'slideshare'
     else if (/speakerdeck/.test(host)) return 'speakerdeck'
     else if (/qiita/.test(host)) return 'qiita'
+    else if (/google/.test(host)) return 'google'
   }
 }

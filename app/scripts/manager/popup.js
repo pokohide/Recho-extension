@@ -2,6 +2,8 @@ import $ from 'jquery'
 import { randomStr } from '../utils'
 
 const API_URL = 'https://recho-api.herokuapp.com'
+const ACTIVATE = 'Activate'
+const INACTIVATE = 'Inactivate'
 
 export default class PopupManager {
   constructor() {
@@ -52,7 +54,7 @@ export default class PopupManager {
   }
 
   _toggleSubmit(flag) {
-    if (flag) this.submitButton.addClass('active').text('有効中')
-    else this.submitButton.removeClass('active').text('有効にする')
+    if (flag) this.submitButton.addClass('active').text(INACTIVATE)
+    else this.submitButton.removeClass('active').text(ACTIVATE)
   }
 }

@@ -2,6 +2,14 @@ body {
   background-color: #f4f5f7;
 }
 
+.logo-image {
+  height: 50px;
+  width: 100%;
+  margin: 0;
+  padding: 5px 0;
+  outline: none;
+}
+
 #submit-button {
 
   &.active {
@@ -48,6 +56,10 @@ body {
     .header {
       padding: 5px;
       margin: 0;
+    }
+
+    #hashtag-input {
+      padding: 4px;
     }
   }
 

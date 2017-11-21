@@ -5,6 +5,9 @@ const $submitButton = $('#submit-button')
 const $hashInput = $('#hashtag-input')
 const $dirInput = $('#direction-input')
 
+const ACTIVATE = 'Activate'
+const INACTIVATE = 'Inactivate'
+
 $(function() {
   const manager = new PopupManager()
 
@@ -19,14 +22,14 @@ $(function() {
 
     $submitButton.addClass('loading')
     manager.send({ method: 'recho', hashtag: hashtag, direction: direction }, (res) => {
-      $submitButton.addClass('active').removeClass('loading').text('有効中')
+      $submitButton.addClass('active').removeClass('loading').text(INACTIVATE)
     })
   }
 
   const disableStream = () => {
     $submitButton.addClass('loading')
     manager.send({ method: 'disrecho' }, (res) => {
-      $submitButton.removeClass('active').removeClass('loading').text('有効にする')
+      $submitButton.removeClass('active').removeClass('loading').text(ACTIVATE)
     })
   }
 

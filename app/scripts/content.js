@@ -2,6 +2,7 @@ import Flowly from 'flowly-js'
 import io from 'socket.io-client'
 import $ from 'jquery'
 import ContentManager from './manager/content'
+import CharController from './utils/char_controller'
 import { randomColor, removeURL } from './utils'
 
 /******************************************************/
@@ -15,10 +16,10 @@ const connect = (socket) => {
     socket.emit('get_state', r__manager.getState())
   })
   socket.on('show_comments', () => {
-    r__flowly.toggle(true)
+    r__controller.toggle(true)
   })
   socket.on('hide_comments', () => {
-    r__flowly.toggle(false)
+    r__controller.toggle(true)
   })
   socket.on('show_navigation', () => {
     r__manager.showNavigation()
@@ -42,14 +43,13 @@ const tweetHandler = (tweet) => {
   const size = 40 + 12 / tweet.length
   const color = randomColor()
   const text = removeURL(tweet)
-  r__flowly.addText({ body: text, size: size, color: color })
+  r__controller.addText({ body: text, size: size, color: color })
   r__manager.countUp('tweet', 1)
 }
 
 // ハッシュタグを含むツイートがいいねされた時にいいね！をランダムで表示したい
 const likeHandler = (like) => {
-  console.log('like', like)
-  r__flowly.addImage({
+  r__controller.addImage({
     url: chrome.extension.getURL('images/like.png'),
     width: '80px',
     height: '80px',
@@ -70,7 +70,7 @@ const deleteStream = (socket, params) => {
 /******************************************************/
 const API_URL = 'https://recho-api.herokuapp.com'
 var r__manager = new ContentManager(location.hostname)
-var r__flowly = new Flowly(r__manager.container, { padding: { top: 30, bottom: 30 } })
+var r__controller = new CharController('Flowly', r__manager.container)
 var r__socket = undefined
 
 chrome.extension.sendRequest({}, function(res) {})
@@ -79,8 +79,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.method) {
     case 'update':
       console.log(request.dir)
+      r__controller.update({ direction: request.dir })
       r__manager.update({ direction: request.dir })
-      r__flowly.update({ direction: request.dir })
       sendResponse(true)
       break
     case 'isRechoing':
